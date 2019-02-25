@@ -1,0 +1,91 @@
+---
+title: Reshaping MITUS Results and Rendering in Tabby2
+output: html_document 
+---
+
+In this document we'll do some timing tests on reshaping options 
+for outcomes from MITUS for fast plotting options in Tabby2. 
+
+
+```{r, echo=F}
+a <- Sys.time()
+sapply(1:9, function(x) load(system.file(paste0('US/US_results_', x, '.rda'), package='MITUS')))
+b <- Sys.time()
+print("How much time does it take to load 9 pre-calculated results from MITUS?"
+print(b-a)
+```
+
+```{r, echo=F}
+format_as_restab <- function(o) { 
+
+  for (intv in 1:9){
+    #load the results for all the runs (need to make this dataset)
+    load(paste0("~/MITUS/inst/US/",loc,"_results_",intv,".rda"))
+      #dimensions of restab are:
+      #number of datasets, number of ages, number of interventions
+    nr<-10
+    #define o as the results
+    o<-out
+#gather the outputs from that model run
+    for (ag in 1:11){
+################################################################################
+      #total population
+      #dimensions are
+      #scenarios; length age id;
+      # print(1:nr+((intv-1)*10))
+################################################################################
+      ResTab[1:nr+((intv-1)*10),,1,ag]<-o[,age_id,1]
+      #number of ltbi prevalence
+      ResTab[1:nr+((intv-1)*10),,2,ag]<-apply(o[,age_id,c(54,65)+ag],c(1,2),sum)*1e3
+      #percentage of ltbi prevalence
+      ResTab[1:nr+((intv-1)*10),,3,ag]<-apply(o[,age_id,c(54,65)+ag],c(1,2),sum)/o[, age_id,32+ag]*1e2
+      #TB notifications (alive+dead at diagnosis)
+      ResTab[1:nr+((intv-1)*10),,4,ag]<-apply(o[,age_id,c(135,188)+ag],c(1,2),sum)*1e3
+      #percentage TB notifications (alive+dead at diagnosis)
+      ResTab[1:nr+((intv-1)*10),,5,ag]<-apply(o[,age_id,c(135,188)+ag],c(1,2),sum)/o[, age_id,32+ag]*1e2
+      #tb attributable deaths
+      ResTab[1:nr+((intv-1)*10),,6,ag]<-apply(o[,age_id,c(87,98)+ag],c(1,2),sum)*1e3
+      # percentage tb attributable deaths
+      ResTab[1:nr+((intv-1)*10),,7,ag]<-apply(o[,age_id,c(87,98)+ag],c(1,2),sum)/o[, age_id,32+ag]*1e2
+
+      ################################################################################
+      #US Born population
+      ################################################################################
+      ResTabus[1:nr+((intv-1)*10),,1,ag]<-o[,age_id,1]
+      #number of ltbi prevalence
+      ResTabus[1:nr+((intv-1)*10),,2,ag]<-o[, age_id,54+ag]*1e3
+      #percentage of ltbi prevalence
+      ResTabus[1:nr+((intv-1)*10),,3,ag]<-o[, age_id,54+ag]/o[, age_id,43+ag]*1e2
+      #TB notifications (alive+dead at diagnosis)
+      ResTabus[1:nr+((intv-1)*10),,4,ag]<-apply(o[, age_id,c(204,215)+ag],c(1,2),sum)*1e3
+      #percentage TB notifications (alive+dead at diagnosis)
+      ResTabus[1:nr+((intv-1)*10),,5,ag]<-apply(o[, age_id,c(204,215)+ag],c(1,2),sum)/o[, age_id,43+ag]*1e2
+      #tb attributable deaths
+      ResTabus[1:nr+((intv-1)*10),,6,ag]<-o[, age_id,87+ag]*1e3
+      # percentage tb attributable deaths
+      ResTabus[1:nr+((intv-1)*10),,7,ag]<-o[, age_id,87+ag]/o[, age_id,43+ag]*1e2
+
+      ################################################################################
+      #non-US Born population
+      ################################################################################
+      ResTabfb[1:nr+((intv-1)*10),,1,ag]<-o[,age_id,1]
+      #number of ltbi prevalence
+      ResTabfb[1:nr+((intv-1)*10),,2,ag]<-o[, age_id,65+ag]*1e3
+      #percentage of ltbi prevalence
+      ResTabfb[1:nr+((intv-1)*10),,3,ag]<-o[, age_id,65+ag]/o[, age_id,2+ag]*1e2
+      #TB notifications (alive+dead at diagnosis)
+      ResTabfb[1:nr+((intv-1)*10),,4,ag]<-(apply(o[, age_id,c(135,188)+ag],c(1,2),sum)-apply(o[, age_id,c(204,215)+ag],c(1,2),sum))*1e3
+      #percentage TB notifications (alive+dead at diagnosis)
+      ResTabfb[1:nr+((intv-1)*10),,5,ag]<-(apply(o[, age_id,c(135,188)+ag],c(1,2),sum)-apply(o[, age_id,c(204,215)+ag],c(1,2),sum))/o[, age_id,43+ag]*1e2
+      #tb attributable deaths
+      ResTabfb[1:nr+((intv-1)*10),,6,ag]<-o[, age_id,98+ag]*1e3
+      # percentage tb attributable deaths
+      ResTabfb[1:nr+((intv-1)*10),,7,ag]<-o[, age_id,98+ag]/o[, age_id,2+ag]*1e2
+    }
+    # print(paste(aa,"--",bb)); flush.console()
+    } #end batch loop
+
+}
+```
+
+
