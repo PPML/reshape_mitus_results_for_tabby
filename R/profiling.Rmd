@@ -6,8 +6,17 @@ output: html_document
 In this document we'll do some timing tests on reshaping options 
 for outcomes from MITUS for fast plotting options in Tabby2. 
 
+Let's enumerate the things we want to time: 
 
-```{r, echo=F}
+1. How long does it take to load pre-computed results from MITUS?
+2. How long does it take to run a single simulation
+3. How long does reshaping a single simulation take in R? 
+4. How long does reshaping a single simulation take in C++?
+5. How long does selectively reshaping "on-the-fly" take in R? 
+6. How long does selectively reshaping "on-the-fly" take in C++? 
+
+```{r load 9 simulations, echo=F}
+library(MITUS)
 a <- Sys.time()
 sapply(1:9, function(x) load(system.file(paste0('US/US_results_', x, '.rda'), package='MITUS')))
 b <- Sys.time()
@@ -15,7 +24,7 @@ print("How much time does it take to load 9 pre-calculated results from MITUS?"
 print(b-a)
 ```
 
-```{r, echo=F}
+```{r format_as_restab, echo=F}
 format_as_restab <- function(o) { 
 
   for (intv in 1:9){
@@ -88,4 +97,50 @@ format_as_restab <- function(o) {
 }
 ```
 
+```{r run a simulation including parameter and model load}
+
+a <- Sys.time()
+model_load('US')
+data('US/US_parAll10_2018-12-10.rda', package='MITUS')
+OutputsZint(1, 
+	    ParMatrix=ParMatrix, 
+	    startyr=1950,
+	    endyr=2050,
+	    Int1=0,
+	    Int2=0,
+	    Int3=0,
+	    Int4=0,
+	    Int5=0,
+	    Scen1=0,
+	    Scen2=0,
+	    Scen3=0)
+b <- Sys.time()
+print("Running a single simulation with MITUS takes...")
+print(b-a)
+
+```
+
+
+```{r run a simulation not including parameter and model load}
+model_load('US')
+data('US/US_parAll10_2018-12-10.rda', package='MITUS')
+
+a <- Sys.time()
+OutputsZint(1, 
+	    ParMatrix=ParMatrix, 
+	    startyr=1950,
+	    endyr=2050,
+	    Int1=0,
+	    Int2=0,
+	    Int3=0,
+	    Int4=0,
+	    Int5=0,
+	    Scen1=0,
+	    Scen2=0,
+	    Scen3=0)
+b <- Sys.time()
+print("Running a single simulation with MITUS takes...")
+print(b-a)
+
+```
 
