@@ -1,7 +1,7 @@
 ---
 title: Using the 'TABUS' C++ Reshaper
 author: Christian "Small-Plate" Testa
-output: pdf_document
+output: html_document
 ---
 
 ```{r}
@@ -25,7 +25,7 @@ out <- OutputsZint(1,
 
 Define the original `format_as_restab` for double-checking our results.
 
-```{r, echo=F}
+```{r}
 format_as_restab <- function(o) { 
 
   age_id = (2018:2049)-1949
@@ -105,7 +105,7 @@ format_as_restab <- function(o) {
 }
 ```
 
-Generate ResTab (4D) objects
+Generate the ResTabC list containing 3 (4D) objects: ResTab, ResTabus, ResTabfb
 
 ```{r}
 ResTabC <- format_as_restab(out)
