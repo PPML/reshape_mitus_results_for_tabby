@@ -64,8 +64,8 @@ for (int j = 0; j < dim.size(); j++) {
 //     the position (in 1 dimension) in rt, rtus, or rtfb of the data that
 //     we're going to use to fill in rt2
 //
-NumericVector ii(8);
-IntegerVector i(7);
+NumericVector ii(7);
+IntegerVector i(8);
 IntegerVector rt_idx(4);
 int idx;
 
@@ -126,7 +126,7 @@ for (int j = 0; j < rt2.nrow(); j++) {
 			for (int k = 0; k < dim.size(); k++) { 
 				idx = idx + dim_mults[k] * rt_idx[k];
 			}
-			rt2(j,7) = rt[idx]; // Fill in data from rt
+			rt2(j,6) = rt[idx]; // Fill in data from rt
 
 		} else if (i[2] == 2) { 
 			// -------------------- US-Born Population -- Absolute Values --------------------
@@ -137,7 +137,7 @@ for (int j = 0; j < rt2.nrow(); j++) {
 			for (int k = 0; k < dim.size(); k++) {
 				idx = idx + dim_mults[k] * rt_idx[k];
 			}
-			rt2(j,7) = rtus[idx]; // Fill in data from rtus
+			rt2(j,6) = rtus[idx]; // Fill in data from rtus
 
 
 		} else if (i[2] == 3) { 
@@ -149,7 +149,7 @@ for (int j = 0; j < rt2.nrow(); j++) {
 			for (int k = 0; k < dim.size(); k++) {
 				idx = idx + dim_mults[k] * rt_idx[k];
 			}
-			rt2(j,7) = rtfb[idx]; // Fill in data from rtfb
+			rt2(j,6) = rtfb[idx]; // Fill in data from rtfb
 
 
 		} else { 
@@ -171,7 +171,7 @@ for (int j = 0; j < rt2.nrow(); j++) {
 			for (int k = 0; k < dim.size(); k++) {
 				idx = idx + dim_mults[k] * rt_idx[k];
 			}
-			rt2(j,7) = rt[idx]; // Fill in numerator data from rt
+			rt2(j,6) = rt[idx]; // Fill in numerator data from rt
 
 			// Determine 4-dimensional denominator data position in ResTab
 			rt_idx = IntegerVector::create(0,ii[5]-1,ii[0],ii[3]-1);
@@ -181,7 +181,7 @@ for (int j = 0; j < rt2.nrow(); j++) {
 			} 
 
 			// Divide by denominator data from rt and format as percent
-			rt2(j,7) = rt2(j,7) / rt[idx] * 100; 
+			rt2(j,6) = rt2(j,6) / rt[idx] * 100; 
 
 
 		} else if (i[2] == 2) { 
@@ -193,7 +193,7 @@ for (int j = 0; j < rt2.nrow(); j++) {
 			for (int k = 0; k < dim.size(); k++) {
 				idx = idx + dim_mults[k] * rt_idx[k];
 			}
-			rt2(j,7) = rtus[idx]; // Fill in numerator data from rtus
+			rt2(j,6) = rtus[idx]; // Fill in numerator data from rtus
 
 			// Determine 4-dimensional denominator data position in ResTabus
 			rt_idx = IntegerVector::create(0,ii[5]-1,ii[0],ii[3]-1);
@@ -203,7 +203,7 @@ for (int j = 0; j < rt2.nrow(); j++) {
 			}
 
 			// Divide by denominator data from rtus and format as percent
-			rt2(j,7) = rt2(j,7) / rtus[idx] * 100;
+			rt2(j,6) = rt2(j,6) / rtus[idx] * 100;
 
 		} else if (i[2] == 3) { 
 			// ------------------ Non-US-Born Population -- Percent Basecase in Same Year ------------------
@@ -214,7 +214,7 @@ for (int j = 0; j < rt2.nrow(); j++) {
 			for (int k = 0; k < dim.size(); k++) {
 				idx = idx + dim_mults[k] * rt_idx[k];
 			}
-			rt2(j,7) = rtfb[idx]; // Fill in numerator data from rtfb
+			rt2(j,6) = rtfb[idx]; // Fill in numerator data from rtfb
 
 			// Determine 4-dimensional denominator data position in ResTabfb
 			rt_idx = IntegerVector::create(0,ii[5]-1,ii[0],ii[3]-1);
@@ -224,7 +224,7 @@ for (int j = 0; j < rt2.nrow(); j++) {
 			}
 
 			// Divide by denominator data from rtfb and format as percent
-			rt2(j,7) = rt2(j,7) / rtfb[idx] * 100;
+			rt2(j,6) = rt2(j,6) / rtfb[idx] * 100;
 
 		} else {
 			// ------------------------ Throw an error if i[2] is not 1, 2, or 3 ------------------------
@@ -245,7 +245,7 @@ for (int j = 0; j < rt2.nrow(); j++) {
 			for (int k = 0; k < dim.size(); k++) {
 				idx = idx + dim_mults[k] * rt_idx[k];
 			}
-			rt2(j,7) = rt[idx]; // Fill in numerator data from rt
+			rt2(j,6) = rt[idx]; // Fill in numerator data from rt
 
 			// Determine 4-dimensional denominator data position in ResTab
 			rt_idx = IntegerVector::create(0,ii[5]-1,0,ii[3]-1);
@@ -255,7 +255,7 @@ for (int j = 0; j < rt2.nrow(); j++) {
 			}
 
 			// Divide by denominator data from rt and format as percent
-			rt2(j,7) = rt2(j,7) / rt[idx] * 100;
+			rt2(j,6) = rt2(j,6) / rt[idx] * 100;
 
 		} else if (i[2] == 2) {
 			// ------------------ US-Born Population -- Percent Basecase in 2018 ------------------------
@@ -266,7 +266,7 @@ for (int j = 0; j < rt2.nrow(); j++) {
 			for (int k = 0; k < dim.size(); k++) {
 				idx = idx + dim_mults[k] * rt_idx[k];
 			}
-			rt2(j,7) = rtus[idx]; // Fill in numerator data from rtus
+			rt2(j,6) = rtus[idx]; // Fill in numerator data from rtus
 
 			// Determine 4-dimensional denominator data position in ResTabus
 			rt_idx = IntegerVector::create(0,ii[5]-1,0,ii[3]-1);
@@ -276,7 +276,7 @@ for (int j = 0; j < rt2.nrow(); j++) {
 			}
 
 			// Divide by denominator data from rtus and format as percent
-			rt2(j,7) = rt2(j,7) / rtus[idx] * 100;
+			rt2(j,6) = rt2(j,6) / rtus[idx] * 100;
 
 
 		} else if (i[2] == 3) { 
@@ -288,7 +288,7 @@ for (int j = 0; j < rt2.nrow(); j++) {
 			for (int k = 0; k < dim.size(); k++) {
 				idx = idx + dim_mults[k] * rt_idx[k];
 			}
-			rt2(j,7) = rtfb[idx]; // Fill in numerator data from rtfb
+			rt2(j,6) = rtfb[idx]; // Fill in numerator data from rtfb
 
 			// Determine 4-dimensional denominator data position in ResTabfb
 			rt_idx = IntegerVector::create(0,ii[5]-1,0,ii[3]-1);
@@ -298,7 +298,7 @@ for (int j = 0; j < rt2.nrow(); j++) {
 			}
 
 			// Divide by denominator data from rtus and format as percent
-			rt2(j,7) = rt2(j,7) / rtfb[idx] * 100;
+			rt2(j,6) = rt2(j,6) / rtfb[idx] * 100;
 
 		} else {
 			// ------------------ Throw an error if i[2] is not 1, 2, or 3 ------------------------

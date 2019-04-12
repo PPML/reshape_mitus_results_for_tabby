@@ -1,0 +1,253 @@
+---
+title: Using the 'TABUS' C++ Reshaper
+author: Christian "Small-Plate" Testa
+output: pdf_document
+---
+
+```{r}
+library(MITUS)
+devtools::load_all()
+model_load('US')
+load(system.file('US/US_parAll10_2018-12-10.rda', package='MITUS')) # input parameters
+out <- OutputsZint(1, 
+	    ParMatrix=ParMatrix, 
+	    startyr=1950,
+	    endyr=2050,
+	    Int1=0,
+	    Int2=0,
+	    Int3=0,
+	    Int4=0,
+	    Int5=0,
+	    Scen1=0,
+	    Scen2=0,
+	    Scen3=0)
+```
+
+Define the original `format_as_restab` for double-checking our results.
+
+```{r, echo=F}
+format_as_restab <- function(o) { 
+
+  age_id = (2018:2049)-1949
+  tt<-0
+  #create 3 lists to hold output
+  ResTabfb <- ResTabus <- ResTab <- array(NA,dim=c(10,length(age_id),7,11))
+
+	# For now just set intv = 1 for a base-case scenario, but later we need to change this
+	# to reflect that we're working on custom scenarios
+	intv <- 1
+
+	#dimensions of restab are:
+	#number of datasets, number of ages, number of interventions
+	nr<-10
+	#gather the outputs from that model run
+	for (ag in 1:11){
+		################################################################################
+		#total population
+		#dimensions are
+		#scenarios; length age id;
+		# print(1:nr+((intv-1)*10))
+		################################################################################
+		ResTab[1:nr+((intv-1)*10),,1,ag]<-o[age_id,1]
+		#number of ltbi prevalence
+		ResTab[1:nr+((intv-1)*10),,2,ag]<-apply(o[age_id,c(54,65)+ag],c(1,2),sum)*1e3
+		#percentage of ltbi prevalence
+		ResTab[1:nr+((intv-1)*10),,3,ag]<-apply(o[age_id,c(54,65)+ag],c(1,2),sum)/o[age_id,32+ag]*1e2
+		#TB notifications (alive+dead at diagnosis)
+		ResTab[1:nr+((intv-1)*10),,4,ag]<-apply(o[age_id,c(135,188)+ag],c(1,2),sum)*1e3
+		#percentage TB notifications (alive+dead at diagnosis)
+		ResTab[1:nr+((intv-1)*10),,5,ag]<-apply(o[age_id,c(135,188)+ag],c(1,2),sum)/o[age_id,32+ag]*1e2
+		#tb attributable deaths
+		ResTab[1:nr+((intv-1)*10),,6,ag]<-apply(o[age_id,c(87,98)+ag],c(1,2),sum)*1e3
+		# percentage tb attributable deaths
+		ResTab[1:nr+((intv-1)*10),,7,ag]<-apply(o[age_id,c(87,98)+ag],c(1,2),sum)/o[age_id,32+ag]*1e2
+
+		################################################################################
+		#US Born population
+		################################################################################
+		ResTabus[1:nr+((intv-1)*10),,1,ag]<-o[age_id,1]
+		#number of ltbi prevalence
+		ResTabus[1:nr+((intv-1)*10),,2,ag]<-o[age_id,54+ag]*1e3
+		#percentage of ltbi prevalence
+		ResTabus[1:nr+((intv-1)*10),,3,ag]<-o[age_id,54+ag]/o[age_id,43+ag]*1e2
+		#TB notifications (alive+dead at diagnosis)
+		ResTabus[1:nr+((intv-1)*10),,4,ag]<-apply(o[age_id,c(204,215)+ag],c(1,2),sum)*1e3
+		#percentage TB notifications (alive+dead at diagnosis)
+		ResTabus[1:nr+((intv-1)*10),,5,ag]<-apply(o[age_id,c(204,215)+ag],c(1,2),sum)/o[age_id,43+ag]*1e2
+		#tb attributable deaths
+		ResTabus[1:nr+((intv-1)*10),,6,ag]<-o[age_id,87+ag]*1e3
+		# percentage tb attributable deaths
+		ResTabus[1:nr+((intv-1)*10),,7,ag]<-o[age_id,87+ag]/o[age_id,43+ag]*1e2
+
+		################################################################################
+		#non-US Born population
+		################################################################################
+		ResTabfb[1:nr+((intv-1)*10),,1,ag]<-o[age_id,1]
+		#number of ltbi prevalence
+		ResTabfb[1:nr+((intv-1)*10),,2,ag]<-o[age_id,65+ag]*1e3
+		#percentage of ltbi prevalence
+		ResTabfb[1:nr+((intv-1)*10),,3,ag]<-o[age_id,65+ag]/o[age_id,2+ag]*1e2
+		#TB notifications (alive+dead at diagnosis)
+		ResTabfb[1:nr+((intv-1)*10),,4,ag]<-(apply(o[age_id,c(135,188)+ag],c(1,2),sum)-apply(o[age_id,c(204,215)+ag],c(1,2),sum))*1e3
+		#percentage TB notifications (alive+dead at diagnosis)
+		ResTabfb[1:nr+((intv-1)*10),,5,ag]<-(apply(o[age_id,c(135,188)+ag],c(1,2),sum)-apply(o[age_id,c(204,215)+ag],c(1,2),sum))/o[age_id,43+ag]*1e2
+		#tb attributable deaths
+		ResTabfb[1:nr+((intv-1)*10),,6,ag]<-o[age_id,98+ag]*1e3
+		# percentage tb attributable deaths
+		ResTabfb[1:nr+((intv-1)*10),,7,ag]<-o[age_id,98+ag]/o[age_id,2+ag]*1e2
+	}
+
+  return(list(
+							ResTab = ResTab,
+							ResTabus = ResTabus,
+							ResTabfb = ResTabfb
+							))
+}
+```
+
+Generate ResTab (4D) objects
+
+```{r}
+ResTabC <- format_as_restab(out)
+```
+
+Generate res_tab2 dataframe (without data yet)
+
+```{r}
+make_empty_res_tab2 <- function() {
+	# Specify the levels of each dimension to the data
+	CatList <- list()
+	CatList[[1]] <- c(
+		"ltbi_000s",
+		"pct_ltbi",
+		"tb_incidence_000s",
+		"tb_incidence_per_mil",
+		"tb_mortality_000s",
+		"tb_mortality_per_mil")
+	CatList[[2]] <- c('base_case')
+	CatList[[3]] <- c("all_populations","usb_population","fb_population")
+	CatList[[4]] <- c("0-4",paste(0:8*10+5,1:9*10+4,sep="-"),"95+")
+	CatList[[5]] <- c("absolute_value","pct_basecase_same_year","pct_basecase_2016")
+	CatList[[6]] <- 2018:2049
+	# CatList[[7]] <- c("mean","ci_low","ci_high")
+
+	# Make the specified levels integer-leveled factors
+	CatList_factors <- lapply(CatList, function(x) {
+		factor(x=1:length(x), levels=1:length(x), labels=x) })
+
+	# Turn the integer-factors into all possible combinations in a dataframe
+	# with an extra column of NA values for a 'value' column
+	res_tab2 <-  cbind(expand.grid(CatList_factors),NA)
+
+	# Name the columns
+	colnames(res_tab2) <- c(
+		"outcome",
+		"scenario",
+		"population",
+		"age_group",
+		"comparator",
+		"year",
+		"value")
+
+	return(res_tab2)
+}
+```
+
+Specify the original reshaper function in R
+```{r}
+original_reshaper <- function(ResTabC) {
+	res_tab2 <- make_empty_res_tab2()
+
+  for (it in 1:nrow(res_tab2)) {
+    i1 <- as.integer(res_tab2[it,'outcome'])
+    i2 <- as.integer(res_tab2[it, 'scenario'])
+    i3 <- as.integer(res_tab2[it, 'population'])
+    i4 <- as.integer(res_tab2[it, 'age_group'])
+    i5 <- as.integer(res_tab2[it, 'comparator'])
+    i6 <- as.integer(res_tab2[it, 'year'])
+    i7 <- as.integer(res_tab2[it, 'statistic'])
+
+    res_tab2[it, 'value'] <-
+      switch(
+        as.character(res_tab2[it, 'comparator']),
+        'absolute_value' = {
+          ResTabC[[i3]][i2, i6, i1 + 1, i4]
+        },
+        'pct_basecase_same_year' = {
+          ResTabC[[i3]][i2, i6, i1 + 1, i4] /
+            ResTabC[[i3]][1, i6, i1 + 1, i4] * 100
+        },
+        'pct_basecase_2016' = {
+          ResTabC[[i3]][i2, i6, i1 + 1, i4] /
+            ResTabC[[i3]][1, i6, 1, i4] * 100
+        }
+      )
+  }
+	return(res_tab2)
+}
+```
+
+
+Now let's test to see if we get the same outcomes from each of our reshapers.
+```{r}
+res_tab2_1 <- original_reshaper(ResTabC)
+
+# Make an empty res_tab2 for comparison to res_tab2_1
+library(dplyr)
+res_tab2_2 <- make_empty_res_tab2()
+# convert to a matrix with integer values where levels would be
+res_tab2_2 %<>% mutate_if(is.factor, as.integer) %>% as.matrix
+
+# Import the C++ Reshaper
+library(inline)
+# We use readr to ensure that the UTF8 encoding of the .cpp file is preserved, 
+# newlines are interpreted properly, etc. Other approaches, such as using readLines 
+# don't automatically respect newlines and tabs properly.
+cpp_reshaper <- cxxfunction(
+	signature(ResTab='numeric', ResTabus='numeric', ResTabfb='numeric', res_tab2 = 'numeric'),
+	plugin='Rcpp',
+	body=readr::read_file(
+		system.file('inline_cpp/format_restab2.cpp', package='tabus')))
+
+res_tab2_2 <- cpp_reshaper(ResTabC$ResTab, ResTabC$ResTabus, ResTabC$ResTabfb, res_tab2_2)
+```
+
+
+Now we do our final test! Do we get exactly the same results? 0 indicates yes!
+```{r}
+if(max(res_tab2_1[,'value'] - res_tab2_2[,'value']) == 0) {
+	print('SUCCESS!')
+} else print(':(')
+```
+
+If one wants to format the `res_tab2_2` object to be filled with characters instead of integers, we just have to re-factor it. 
+
+```{r}
+	# Specify the levels of each dimension to the data
+	CatList <- list()
+	CatList[[1]] <- c(
+		"ltbi_000s",
+		"pct_ltbi",
+		"tb_incidence_000s",
+		"tb_incidence_per_mil",
+		"tb_mortality_000s",
+		"tb_mortality_per_mil")
+	CatList[[2]] <- c('base_case')
+	CatList[[3]] <- c("all_populations","usb_population","fb_population")
+	CatList[[4]] <- c("0-4",paste(0:8*10+5,1:9*10+4,sep="-"),"95+")
+	CatList[[5]] <- c("absolute_value","pct_basecase_same_year","pct_basecase_2016")
+	CatList[[6]] <- 2018:2049
+
+
+# Format as a dataframe
+res_tab2_2 <- as.data.frame(res_tab2_2)
+
+# 'Factorize' each column
+for (i in 1:6) {
+	res_tab2_2[,i] <- factor(res_tab2_2[,i], labels = CatList[[i]])
+}
+
+# Print for validation and comfort of mind
+head(res_tab2_2)
+```
+
