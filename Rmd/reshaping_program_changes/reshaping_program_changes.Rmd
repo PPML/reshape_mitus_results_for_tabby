@@ -43,30 +43,38 @@ restabs <- format_as_restab_for_custom_scenarios('US', custom_scenario_output)
 ```
 
 ```{r take the mean of the simulations}
-age_id <- (2018:2049)-1949
-nr <- 10
-mResTabfb <- mResTabus <- mResTab <- array(NA,dim=c(2,length(age_id),7,11))
+# age_id <- (2018:2049)-1949
+# nr <- 10
+# mResTabfb <- mResTabus <- mResTab <- array(NA,dim=c(2,length(age_id),7,11))
 
-ResTab <- restabs[['small_results']][['ResTab']]
-ResTabus <- restabs[['small_results']][['ResTabus']]
-ResTabfb <- restabs[['small_results']][['ResTabfb']]
-
-
- for(l in 1:2){
-   for (i in 1:length(age_id)){
-    for (j in 1:7){
-      for (k in 1:11){
-        mResTab[l,i,j,k]<-mean(na.omit(ResTab[1:nr+((l-1)*10),i,j,k]))
-        mResTabus[l,i,j,k]<-mean(na.omit(ResTabus[1:nr+((l-1)*10),i,j,k]))
-        mResTabfb[l,i,j,k]<-mean(na.omit(ResTabfb[1:nr+((l-1)*10),i,j,k]))
-      } } }}
+# ResTab <- restabs[['small_results']][['ResTab']]
+# ResTabus <- restabs[['small_results']][['ResTabus']]
+# ResTabfb <- restabs[['small_results']][['ResTabfb']]
 
 
-ResTabC <- list(mResTab,mResTabus,mResTabfb)
+#  for(l in 1:2){
+#    for (i in 1:length(age_id)){
+#     for (j in 1:7){
+#       for (k in 1:11){
+#         mResTab[l,i,j,k]<-mean(na.omit(ResTab[1:nr+((l-1)*10),i,j,k]))
+#         mResTabus[l,i,j,k]<-mean(na.omit(ResTabus[1:nr+((l-1)*10),i,j,k]))
+#         mResTabfb[l,i,j,k]<-mean(na.omit(ResTabfb[1:nr+((l-1)*10),i,j,k]))
+#       } } }}
+
+
+# ResTabC <- list(mResTab,mResTabus,mResTabfb)
+ResTabC_small <- mean_small_restabs(restabs)
+ResTabC_big <- mean_big_restabs(restabs)
+
 ```
 
-```{r make empty restab}
-restab <- make_empty_res_tab2(intvs = c('basecase', 'custom_scenario'))
+```{r reshape into tabby format}
+restab <- make_empty_res_tab(intvs = c('basecase', 'custom_scenario'), big_or_small = 'small')
 restab %<>% mutate_if(is.factor, as.integer) %>% as.matrix
-restab <- cpp_reshaper(ResTabC[[1]], ResTabC[[2]], ResTabC[[3]], restab)
+restab_small <- cpp_reshaper(ResTabC_small[[1]], ResTabC_small[[2]], ResTabC_small[[3]], restab)
+
+restab <- make_empty_res_tab(intvs = c('basecase', 'custom_scenario'), big_or_small = 'big')
+restab %<>% mutate_if(is.factor, as.integer) %>% as.matrix
+restab_big <- cpp_reshaper(ResTabC_big[[1]], ResTabC_big[[2]], ResTabC_big[[3]], restab)
+
 ```

@@ -1,7 +1,16 @@
 
-make_empty_res_tab2 <- function(intvs) {
+make_empty_res_tab <- function(intvs, big_or_small_ages = c('big', 'small')) {
   if (missing(intvs)) { 
     intvs <- c('base_case', paste0('intervention_', 1:5), paste0('scenario_', 1:3))
+	}
+
+	if (length(big_or_small_ages) != 1 || ! big_or_small_ages %in% c('big', 'small')) { 
+	  stop("big_or_small_ages must be one of 'big' or 'small'") }
+
+	if (big_or_small_ages == 'small') { 
+	  ages <- c("0-4",paste(0:8*10+5,1:9*10+4,sep="-"),"95+")
+	} else {
+	  ages <- c("all", "0-24","25-64","65+")
 	}
 	# Specify the levels of each dimension to the data
 	CatList <- list()
@@ -14,7 +23,7 @@ make_empty_res_tab2 <- function(intvs) {
 		"tb_mortality_per_mil")
 	CatList[[2]] <- intvs
 	CatList[[3]] <- c("all_populations","usb_population","fb_population")
-	CatList[[4]] <- c("0-4",paste(0:8*10+5,1:9*10+4,sep="-"),"95+")
+	CatList[[4]] <- 
 	CatList[[5]] <- c("absolute_value","pct_basecase_same_year","pct_basecase_2016")
 	CatList[[6]] <- 2018:2049
 	# CatList[[7]] <- c("mean","ci_low","ci_high")
