@@ -1,0 +1,72 @@
+---
+title: reshaping program changes scenarios
+author: christian testa
+date: june 24 2019
+---
+
+
+We're going to simulate some custom scenarios with changes to the TB treatment 
+program inside MITUS. 
+
+```{r dependencies}
+# dependencies
+library(MITUS)
+devtools::load_all(".") # load tabus
+```
+
+
+```{r load MITUS model}
+model_load("US")
+```
+
+```{r example prg_chng}
+# example of prg_chng
+prg_chng<-c(2020,2,.90,.95,.85,.90,.8,.25)
+names(prg_chng)<-
+	c("start_yr", #year in which the program change starts (discontinuous step up to the values below at this year)
+		"scrn_cov", #Screening Coverage Rate as a Multiple of the Current Rate
+		"IGRA_frc", #Fraction of Individuals Receiving IGRA
+		"ltbi_init_frc", #Fraction of Individuals Testing Positive who Accept Treatment
+		"ltbi_comp_frc", #Fraction of Individuals Initiating Treatment Who Complete Treatment
+		"ltbi_eff_frc",
+		"tb_tim2tx_frc", #Duration of Infectiousness
+		"tb_txdef_frc") #Fraction Discontinuing/Defaulting from Treatment
+```
+
+```{r simulate outcomes}
+# prgchng <- prg_chng
+custom_scenario_output <- new_OutputsInt(loc = 'US', ParMatrix = StartVal, prg_chng = prg_chng)
+```
+
+```{r reformat as restabs}
+restabs <- format_as_restab_for_custom_scenarios('US', custom_scenario_output)
+```
+
+```{r take the mean of the simulations}
+age_id <- (2018:2049)-1949
+nr <- 10
+mResTabfb <- mResTabus <- mResTab <- array(NA,dim=c(9,length(age_id),7,11))
+
+ResTab <- restabs[['small_results']][['ResTab']]
+ResTabus <- restabs[['small_results']][['ResTabus']]
+ResTabfb <- restabs[['small_results']][['ResTabfb']]
+
+
+ for(l in 1:2){
+   for (i in 1:length(age_id)){
+    for (j in 1:7){
+      for (k in 1:11){
+        mResTab[l,i,j,k]<-mean(na.omit(ResTab[1:nr+((l-1)*10),i,j,k]))
+        mResTabus[l,i,j,k]<-mean(na.omit(ResTabus[1:nr+((l-1)*10),i,j,k]))
+        mResTabfb[l,i,j,k]<-mean(na.omit(ResTabfb[1:nr+((l-1)*10),i,j,k]))
+      } } }}
+
+
+ResTabC <- list(mResTab,mResTabus,mResTabfb)
+```
+
+```{r make empty restab}
+restab <- make_empty_res_tab2(intvs = c('basecase', 'custom_scenario'))
+restab %<>% mutate_if(is.factor, as.integer) %>% as.matrix
+restab <- cpp_reshaper(ResTabC[[1]], ResTabC[[2]], ResTabC[[3]], restab)
+```

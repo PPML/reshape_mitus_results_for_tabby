@@ -7,8 +7,12 @@ output: html_document
 ```{r}
 library(MITUS)
 devtools::load_all()
-model_load('US')
-load(system.file('US/US_parAll10_2018-12-10.rda', package='MITUS')) # input parameters
+# model_load('US')
+# load(system.file('US/US_parAll10_2018-12-10.rda', package='MITUS')) # input parameters
+
+model_load('CA')
+load(system.file("CA/parAll_CA_10_2018_11_27.rds", package='MITUS'))
+
 out <- OutputsZint(1, 
 	    ParMatrix=ParMatrix, 
 	    startyr=1950,
