@@ -29,7 +29,7 @@ mean_big_restabs <- function(restabs) {
 	age_id <- (2018:2049)-1949
 	nr <- 10
 	# mResTabfb <- mResTabus <- mResTab <- array(NA,dim=c(2,length(age_id),7,11))
-  mResTabfb <- mResTabus <- mResTab <- array(2,dim=c(2,length(age_id),7,4))
+  mResTabfb <- mResTabus <- mResTab <- array(2,dim=c(2,length(age_id),5,4))
 
 	ResTab <- restabs[['big_results']][['ResTab']]
 	ResTabus <- restabs[['big_results']][['ResTabus']]
@@ -37,7 +37,7 @@ mean_big_restabs <- function(restabs) {
 
 	for(l in 1:2){
     for (i in 1:length(age_id)){
-      for (j in 1:7){
+      for (j in 1:5){
         for (k in 1:4){
           mResTab[l,i,j,k]<-mean(na.omit(ResTab[1:nr+((l-1)*10),i,j,k]))
           mResTabus[l,i,j,k]<-mean(na.omit(ResTabus[1:nr+((l-1)*10),i,j,k]))

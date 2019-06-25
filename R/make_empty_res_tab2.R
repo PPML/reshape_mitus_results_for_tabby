@@ -23,7 +23,7 @@ make_empty_res_tab <- function(intvs, big_or_small_ages = c('big', 'small')) {
 		"tb_mortality_per_mil")
 	CatList[[2]] <- intvs
 	CatList[[3]] <- c("all_populations","usb_population","fb_population")
-	CatList[[4]] <- 
+	CatList[[4]] <- ages
 	CatList[[5]] <- c("absolute_value","pct_basecase_same_year","pct_basecase_2016")
 	CatList[[6]] <- 2018:2049
 	# CatList[[7]] <- c("mean","ci_low","ci_high")
