@@ -44,8 +44,8 @@ restabs <- format_as_restab_for_custom_scenarios('US', custom_scenario_output)
 
 ```{r take the mean of the simulations}
 age_id <- (2018:2049)-1949
-nr <- 10
-mResTabfb <- mResTabus <- mResTab <- array(NA,dim=c(9,length(age_id),7,11))
+nr <- 1f
+mResTabfb <- mResTabus <- mResTab <- array(NA,dim=c(2,length(age_id),7,11))
 
 ResTab <- restabs[['small_results']][['ResTab']]
 ResTabus <- restabs[['small_results']][['ResTabus']]

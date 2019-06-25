@@ -113,7 +113,7 @@ format_as_restab_for_custom_scenarios <- function(loc, custom_scenario_output) {
 				o<-readRDS(system.file(paste0(loc,"/results_", intv, "_2019-05-08.rds"), package="MITUS"))
 			}
 		} else {
-		  o <- output
+		  o <- custom_scenario_output
 		}
 
     #dimensions of restab are:
@@ -128,6 +128,7 @@ format_as_restab_for_custom_scenarios <- function(loc, custom_scenario_output) {
       #scenarios; length age id;
       # print(1:nr+((intv-1)*nr))
       ag_vec<- switch(b_ag,1:11, c(1,2,3),c(4,5,6,7),c(8,9,nr,11))
+      cat('range age: ', range(ag_vec), '\n')
       ################################################################################
       # for (ag_vec in ag_vector){
         ResTab[1:nr+((intv-1)*nr),,1,b_ag]<-o[,age_id,1]
