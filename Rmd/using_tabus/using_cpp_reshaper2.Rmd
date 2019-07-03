@@ -38,7 +38,7 @@ restab_ints <- cpp_reshaper(ResTabC[[1]], ResTabC[[2]], ResTabC[[3]], restab_int
 ```
 
 ```{r fill the data into the factored data frame}
-restab[,ncol(restab_factored)] <- restab_ints[,ncol(restab_ints)]
+restab[,ncol(restab)] <- restab_ints[,ncol(restab_ints)]
 ```
 
 ```{r summarize what we have made}
