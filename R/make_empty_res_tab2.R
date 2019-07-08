@@ -52,6 +52,11 @@
 
 
 make_empty_res_tab2sm <- function(intvs) {
+	# If intvs is missing, use the basecase and the 8 pre-defined interventions
+	if (missing(intvs)) {
+    intvs <- c('base_case', paste0('intervention_', 1:5), paste0('scenario_', 1:3))
+	}
+
   # Specify the levels of each dimension to the data
   CatList <- list()
   CatList[[1]] <- c(

@@ -1,0 +1,49 @@
+---
+title: Using the 'TABUS' Reshaper
+author: Christian Testa
+date: July 3, 2019
+output: html_document
+---
+
+In this document, we'll setup MITUS for the United States, read in 10
+simulations of the MITUS model, reshape those (2D) model outputs into a
+4-dimensional array (for the small age-bands), and then reshape those 4D
+arrays into the 2D format Tabby2 uses to render plots of outcomes.
+
+```{r load MITUS and parametrization}
+library(MITUS)
+devtools::load_all() # load tabus
+```
+
+```{r re-format results files into 4D arrays}
+ResTabC <- format_mitus_US_results_as_restabs_small_ages()
+```
+
+```{r make empty restab (2d) data frame to fill}
+restab <- restab_ints <- make_empty_res_tab2sm()
+restab_ints %<>% mutate_if(is.factor, as.integer) %>% as.matrix
+```
+
+```{r define the reshaper from C++}
+library(inline)
+cpp_reshaper <- cxxfunction(
+	signature(ResTab='numeric', ResTabus='numeric', ResTabfb='numeric', res_tab2 = 'numeric'),
+	plugin='Rcpp',
+	body=readr::read_file(
+		system.file('inline_cpp/format_restab2.cpp', package='tabus')))
+```
+
+```{r run the reshaper}
+restab_ints <- cpp_reshaper(ResTabC[[1]], ResTabC[[2]], ResTabC[[3]], restab_ints)
+```
+
+```{r fill the data into the factored data frame}
+restab[,ncol(restab)] <- restab_ints[,ncol(restab_ints)]
+```
+
+```{r summarize what we have made}
+tibble::glimpse(restab)
+```
+
+
+
