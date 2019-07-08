@@ -15,13 +15,35 @@ library(MITUS)
 devtools::load_all() # load tabus
 ```
 
-```{r re-format results files into 4D arrays}
-ResTabC <- format_mitus_US_results_as_restabs_small_ages()
+```{r load MITUS simulations into a data structure}
+load_US_data <- function(i) {
+	data_name <- 
+    load(system.file(paste0("US/US_results_",i,".rda"), package='MITUS'))
+	return(get(data_name))
+}
+
+US_results <- lapply(1:9, load_US_data)
+```
+
+```{r reformat the data for small age bands}
+ResTabC <- list()
+ResTabC[['small_results']] <- format_as_restab_small_ages(US_results)
+ResTabC[['big_results']] <- format_as_restab_big_ages(US_results)
+```
+
+```{r average the results}
+ResTabC[['small_results']] <- mean_small_restabs(ResTabC, nr = 10, nints = 9)
+ResTabC[['big_results']] <- mean_big_restabs(ResTabC, nr = 10, nints = 9)
 ```
 
 ```{r make empty restab (2d) data frame to fill}
-restab <- restab_ints <- make_empty_res_tab2sm()
-restab_ints %<>% mutate_if(is.factor, as.integer) %>% as.matrix
+intvs <- c('base_case', paste0('intervention_', 1:5), paste0('scenario_', 1:3))
+
+restab_sm <- restab_ints_sm <- make_empty_res_tab2sm(intvs)
+restab_ints_sm %<>% mutate_if(is.factor, as.integer) %>% as.matrix
+
+restab_bg <- restab_ints_bg <- make_empty_res_tab2bg(intvs)
+restab_ints_bg %<>% mutate_if(is.factor, as.integer) %>% as.matrix
 ```
 
 ```{r define the reshaper from C++}
@@ -34,15 +56,23 @@ cpp_reshaper <- cxxfunction(
 ```
 
 ```{r run the reshaper}
-restab_ints <- cpp_reshaper(ResTabC[[1]], ResTabC[[2]], ResTabC[[3]], restab_ints)
+restab_ints_sm <- cpp_reshaper(ResTabC[['small_results']][[1]],
+															 ResTabC[['small_results']][[2]],
+															 ResTabC[['small_results']][[3]], restab_ints_sm)
+
+restab_ints_bg <- cpp_reshaper(ResTabC[['small_results']][[1]],
+															 ResTabC[['small_results']][[2]],
+															 ResTabC[['small_results']][[3]], restab_ints_bg)
 ```
 
 ```{r fill the data into the factored data frame}
-restab[,ncol(restab)] <- restab_ints[,ncol(restab_ints)]
+restab_sm[,ncol(restab_sm)] <- restab_ints_sm[,ncol(restab_ints_sm)]
+restab_bg[,ncol(restab_bg)] <- restab_ints_bg[,ncol(restab_ints_bg)]
 ```
 
 ```{r summarize what we have made}
-tibble::glimpse(restab)
+tibble::glimpse(restab_sm)
+tibble::glimpse(restab_bg)
 ```
 
 

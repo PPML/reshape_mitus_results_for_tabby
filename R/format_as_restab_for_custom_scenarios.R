@@ -2,6 +2,7 @@
 
 format_as_restab_for_custom_scenarios <- function(loc, custom_scenario_output) {
 
+	warning("This function will soon be deprecated; Please use format_as_restab_big_ages and format_as_restab_small_ages")
   age_id = (2018:2049)-1949
   tt<-0
 
