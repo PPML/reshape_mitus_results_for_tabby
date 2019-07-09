@@ -29,7 +29,7 @@ format_as_restab_small_ages <- function(simulation_data) {
 	nr <- dim(simulation_data[[1]])[[1]]
 
   #create 3 lists to hold output
-  ResTabfb <- ResTabus <- ResTab <- array(NA,dim=c(nr*nintvs,length(age_id),7,11))
+  ResTabfb <- ResTabus <- ResTab <- array(NA,dim=c(nr*nintvs,length(model_years),7,11))
 	
 	# For each scenario/intervention, fill in the results from the corresponding 
 	# simulation_data entry
@@ -137,7 +137,7 @@ format_as_restab_big_ages <- function(simulation_data) {
 	nr <- dim(simulation_data[[1]])[[1]]
 
   #create 3 lists to hold output
-  ResTabfb <- ResTabus <- ResTab <- array(NA,dim=c(nr*nintvs,length(age_id),5,4))
+  ResTabfb <- ResTabus <- ResTab <- array(NA,dim=c(nr*nintvs,length(model_years),5,4))
 
  
 	# For each scenario/intervention, fill in the results from the corresponding 
