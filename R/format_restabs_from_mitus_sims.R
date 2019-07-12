@@ -1,4 +1,5 @@
 format_mitus_US_results_as_restabs_small_ages <- function() {
+	warning("This function will soon be deprecated; Please use format_as_restab_big_ages and format_as_restab_small_ages")
   age_id = (2018:2049)-1949
   tt<-0
   #create 3 lists to hold output

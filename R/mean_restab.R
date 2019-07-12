@@ -1,15 +1,14 @@
 
 #' Mean the small age group restabs across simulations
-mean_small_restabs <- function(restabs) { 
+mean_small_restabs <- function(restabs, nr, nints) { 
 	age_id <- (2018:2049)-1949
-	nr <- 10
-	mResTabfb <- mResTabus <- mResTab <- array(NA,dim=c(2,length(age_id),7,11))
+	mResTabfb <- mResTabus <- mResTab <- array(NA,dim=c(nints,length(age_id),7,11))
 
 	ResTab <- restabs[['small_results']][['ResTab']]
 	ResTabus <- restabs[['small_results']][['ResTabus']]
 	ResTabfb <- restabs[['small_results']][['ResTabfb']]
 
-	 for(l in 1:2){
+	 for(l in 1:nints){
 		 for (i in 1:length(age_id)){
 			for (j in 1:7){
 				for (k in 1:11){
@@ -24,24 +23,22 @@ mean_small_restabs <- function(restabs) {
 }
 
 #' Mean the big age group restabs across simulations
-mean_big_restabs <- function(restabs) { 
+mean_big_restabs <- function(restabs, nr, nints) { 
 
 	age_id <- (2018:2049)-1949
-	nr <- 10
-	# mResTabfb <- mResTabus <- mResTab <- array(NA,dim=c(2,length(age_id),7,11))
-  mResTabfb <- mResTabus <- mResTab <- array(2,dim=c(2,length(age_id),5,4))
+  mResTabfb <- mResTabus <- mResTab <- array(NA,dim=c(nints,length(age_id),5,4))
 
 	ResTab <- restabs[['big_results']][['ResTab']]
 	ResTabus <- restabs[['big_results']][['ResTabus']]
 	ResTabfb <- restabs[['big_results']][['ResTabfb']]
 
-	for(l in 1:2){
+	for(l in 1:nints){
     for (i in 1:length(age_id)){
       for (j in 1:5){
         for (k in 1:4){
-          mResTab[l,i,j,k]<-mean(na.omit(ResTab[1:nr+((l-1)*10),i,j,k]))
-          mResTabus[l,i,j,k]<-mean(na.omit(ResTabus[1:nr+((l-1)*10),i,j,k]))
-          mResTabfb[l,i,j,k]<-mean(na.omit(ResTabfb[1:nr+((l-1)*10),i,j,k]))
+          mResTab[l,i,j,k]<-mean(na.omit(ResTab[1:nr+((l-1)*nr),i,j,k]))
+          mResTabus[l,i,j,k]<-mean(na.omit(ResTabus[1:nr+((l-1)*nr),i,j,k]))
+          mResTabfb[l,i,j,k]<-mean(na.omit(ResTabfb[1:nr+((l-1)*nr),i,j,k]))
         } } }}
 
 
