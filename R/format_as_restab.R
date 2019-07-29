@@ -44,56 +44,56 @@ format_as_restab_small_ages <- function(simulation_data) {
 			#scenarios; length age id;
 			################################################################################
 			#get the years
-			ResTab[1:nr+((intv-1)*10),,1,ag]<-simulation_data[[intv]][,model_years,1]
+			ResTab[1:nr+((intv-1)*nr),,1,ag]<-simulation_data[[intv]][,model_years,1]
 			#number of ltbi prevalence in thousands
-			ResTab[1:nr+((intv-1)*10),,2,ag]<-apply(simulation_data[[intv]][,model_years,c(54,65)+ag],c(1,2),sum)*1e3
+			ResTab[1:nr+((intv-1)*nr),,2,ag]<-apply(simulation_data[[intv]][,model_years,c(54,65)+ag],c(1,2),sum)*1e3
 			#percentage of ltbi prevalence
-			ResTab[1:nr+((intv-1)*10),,3,ag]<-apply(simulation_data[[intv]][,model_years,c(54,65)+ag],c(1,2),sum)/simulation_data[[intv]][,model_years,2+ag]*1e2
+			ResTab[1:nr+((intv-1)*nr),,3,ag]<-apply(simulation_data[[intv]][,model_years,c(54,65)+ag],c(1,2),sum)/simulation_data[[intv]][,model_years,2+ag]*1e2
 			#TB notifications (incidence) (alive+dead at diagnosis) in thousands
-			ResTab[1:nr+((intv-1)*10),,4,ag]<-apply(simulation_data[[intv]][,model_years,c(135,188)+ag],c(1,2),sum)*1e3
+			ResTab[1:nr+((intv-1)*nr),,4,ag]<-apply(simulation_data[[intv]][,model_years,c(135,188)+ag],c(1,2),sum)*1e3
 			#TB notifications (incidence) (alive+dead at diagnosis) per million
-			ResTab[1:nr+((intv-1)*10),,5,ag]<-apply(simulation_data[[intv]][,model_years,c(135,188)+ag],c(1,2),sum)/simulation_data[[intv]][,model_years,2+ag]*1e6
+			ResTab[1:nr+((intv-1)*nr),,5,ag]<-apply(simulation_data[[intv]][,model_years,c(135,188)+ag],c(1,2),sum)/simulation_data[[intv]][,model_years,2+ag]*1e6
 			#tb attributable deaths in thousands
-			ResTab[1:nr+((intv-1)*10),,6,ag]<-apply(simulation_data[[intv]][,model_years,c(87,98)+ag],c(1,2),sum)*1e3
+			ResTab[1:nr+((intv-1)*nr),,6,ag]<-apply(simulation_data[[intv]][,model_years,c(87,98)+ag],c(1,2),sum)*1e3
 			#  tb attributable deaths per million
-			ResTab[1:nr+((intv-1)*10),,7,ag]<-apply(simulation_data[[intv]][,model_years,c(87,98)+ag],c(1,2),sum)/simulation_data[[intv]][,model_years,2+ag]*1e6
+			ResTab[1:nr+((intv-1)*nr),,7,ag]<-apply(simulation_data[[intv]][,model_years,c(87,98)+ag],c(1,2),sum)/simulation_data[[intv]][,model_years,2+ag]*1e6
 
 			################################################################################
 			#US Born population
 			################################################################################
 			#get da years
-			ResTabus[1:nr+((intv-1)*10),,1,ag]<-simulation_data[[intv]][,model_years,1]
+			ResTabus[1:nr+((intv-1)*nr),,1,ag]<-simulation_data[[intv]][,model_years,1]
 			#number of ltbi prevalence in thousands
-			ResTabus[1:nr+((intv-1)*10),,2,ag]<-simulation_data[[intv]][,model_years,54+ag]*1e3
+			ResTabus[1:nr+((intv-1)*nr),,2,ag]<-simulation_data[[intv]][,model_years,54+ag]*1e3
 			#percentage of ltbi prevalence
-			ResTabus[1:nr+((intv-1)*10),,3,ag]<-simulation_data[[intv]][,model_years,54+ag]/simulation_data[[intv]][,model_years,32+ag]*1e2
+			ResTabus[1:nr+((intv-1)*nr),,3,ag]<-simulation_data[[intv]][,model_years,54+ag]/simulation_data[[intv]][,model_years,32+ag]*1e2
 			#TB notifications (alive+dead at diagnosis) in thousands
-			ResTabus[1:nr+((intv-1)*10),,4,ag]<-apply(simulation_data[[intv]][,model_years,c(204,215)+ag],c(1,2),sum)*1e3
+			ResTabus[1:nr+((intv-1)*nr),,4,ag]<-apply(simulation_data[[intv]][,model_years,c(204,215)+ag],c(1,2),sum)*1e3
 			#TB notifications (alive+dead at diagnosis) per million
-			ResTabus[1:nr+((intv-1)*10),,5,ag]<-apply(simulation_data[[intv]][,model_years,c(204,215)+ag],c(1,2),sum)/simulation_data[[intv]][,model_years,32+ag]*1e6
+			ResTabus[1:nr+((intv-1)*nr),,5,ag]<-apply(simulation_data[[intv]][,model_years,c(204,215)+ag],c(1,2),sum)/simulation_data[[intv]][,model_years,32+ag]*1e6
 			#tb attributable deaths in thousands
-			ResTabus[1:nr+((intv-1)*10),,6,ag]<-simulation_data[[intv]][,model_years,87+ag]*1e3
+			ResTabus[1:nr+((intv-1)*nr),,6,ag]<-simulation_data[[intv]][,model_years,87+ag]*1e3
 			#  tb attributable deaths per million
-			ResTabus[1:nr+((intv-1)*10),,7,ag]<-simulation_data[[intv]][,model_years,87+ag]/simulation_data[[intv]][,model_years,32+ag]*1e6
+			ResTabus[1:nr+((intv-1)*nr),,7,ag]<-simulation_data[[intv]][,model_years,87+ag]/simulation_data[[intv]][,model_years,32+ag]*1e6
 
 			################################################################################
 			#non-US Born population
 			################################################################################
 			# years
-			ResTabfb[1:nr+((intv-1)*10),,1,ag]<-simulation_data[[intv]][,model_years,1]
+			ResTabfb[1:nr+((intv-1)*nr),,1,ag]<-simulation_data[[intv]][,model_years,1]
 			#number of ltbi prevalence in thousands
-			ResTabfb[1:nr+((intv-1)*10),,2,ag]<-simulation_data[[intv]][,model_years,65+ag]*1e3
+			ResTabfb[1:nr+((intv-1)*nr),,2,ag]<-simulation_data[[intv]][,model_years,65+ag]*1e3
 			#percentage of ltbi prevalence
-			ResTabfb[1:nr+((intv-1)*10),,3,ag]<-simulation_data[[intv]][,model_years,65+ag]/simulation_data[[intv]][,model_years,43+ag]*1e2
+			ResTabfb[1:nr+((intv-1)*nr),,3,ag]<-simulation_data[[intv]][,model_years,65+ag]/simulation_data[[intv]][,model_years,43+ag]*1e2
 			#TB notifications (alive+dead at diagnosis)
 			#calculated as total notifications minus US only notifications in thousands
-			ResTabfb[1:nr+((intv-1)*10),,4,ag]<-(apply(simulation_data[[intv]][,model_years,c(135,188)+ag],c(1,2),sum)-apply(simulation_data[[intv]][,model_years,c(204,215)+ag],c(1,2),sum))*1e3
+			ResTabfb[1:nr+((intv-1)*nr),,4,ag]<-(apply(simulation_data[[intv]][,model_years,c(135,188)+ag],c(1,2),sum)-apply(simulation_data[[intv]][,model_years,c(204,215)+ag],c(1,2),sum))*1e3
 			#percentage TB notifications (alive+dead at diagnosis) per million
-			ResTabfb[1:nr+((intv-1)*10),,5,ag]<-(apply(simulation_data[[intv]][,model_years,c(135,188)+ag],c(1,2),sum)-apply(simulation_data[[intv]][,model_years,c(204,215)+ag],c(1,2),sum))/simulation_data[[intv]][,model_years,43+ag]*1e6
+			ResTabfb[1:nr+((intv-1)*nr),,5,ag]<-(apply(simulation_data[[intv]][,model_years,c(135,188)+ag],c(1,2),sum)-apply(simulation_data[[intv]][,model_years,c(204,215)+ag],c(1,2),sum))/simulation_data[[intv]][,model_years,43+ag]*1e6
 			#tb attributable deaths
-			ResTabfb[1:nr+((intv-1)*10),,6,ag]<-simulation_data[[intv]][,model_years,98+ag]*1e3
+			ResTabfb[1:nr+((intv-1)*nr),,6,ag]<-simulation_data[[intv]][,model_years,98+ag]*1e3
 			# percentage tb attributable deaths
-			ResTabfb[1:nr+((intv-1)*10),,7,ag]<-simulation_data[[intv]][,model_years,98+ag]/simulation_data[[intv]][,model_years,43+ag]*1e6
+			ResTabfb[1:nr+((intv-1)*nr),,7,ag]<-simulation_data[[intv]][,model_years,98+ag]/simulation_data[[intv]][,model_years,43+ag]*1e6
 
 		} # end age group loop
 
