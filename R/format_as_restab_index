@@ -28,7 +28,7 @@ format_as_restab_small_ages_indices <- function(simulation_data) {
   nintvs <- length(simulation_data)
   nr <- dim(simulation_data[[1]])[[1]]
   #determine indices from the colnames of the simulation data
-  index<-tabby2_indices(colnames(simulation_data[[1]]))
+  index<-tabby2_indices(colnames(simulation_data[[1]][1,,]))
 
   #create 3 lists to hold output
   ResTabfb <- ResTabus <- ResTab <- array(NA,dim=c(nr*nintvs,length(model_years),7,11))
@@ -89,9 +89,9 @@ format_as_restab_small_ages_indices <- function(simulation_data) {
       ResTabfb[1:nr+((intv-1)*nr),,3,ag]<-simulation_data[[intv]][,model_years,index[5]+ag]/simulation_data[[intv]][,model_years,index[3]+ag]*1e2
       #TB notifications (alive+dead at diagnosis)
       #calculated as total notifications minus US only notifications in thousands
-      ResTabfb[1:nr+((intv-1)*nr),,4,ag]<-(apply(simulation_data[[intv]][,model_years,c(index[14],index[15])+ag],c(1,2),sum)-apply(simulation_data[[intv]][,model_years,c(index[12],index[13])+ag],c(1,2),sum))*1e3
+      ResTabfb[1:nr+((intv-1)*nr),,4,ag]<-(apply(simulation_data[[intv]][,model_years,c(index[8],index[9])+ag],c(1,2),sum)-apply(simulation_data[[intv]][,model_years,c(index[12],index[13])+ag],c(1,2),sum))*1e3
       #percentage TB notifications (alive+dead at diagnosis) per million
-      ResTabfb[1:nr+((intv-1)*nr),,5,ag]<-(apply(simulation_data[[intv]][,model_years,c(index[14],index[15])+ag],c(1,2),sum)-apply(simulation_data[[intv]][,model_years,c(index[12],index[13])+ag],c(1,2),sum))/simulation_data[[intv]][,model_years,index[3]+ag]*1e6
+      ResTabfb[1:nr+((intv-1)*nr),,5,ag]<-(apply(simulation_data[[intv]][,model_years,c(index[8],index[9])+ag],c(1,2),sum)-apply(simulation_data[[intv]][,model_years,c(index[12],index[13])+ag],c(1,2),sum))/simulation_data[[intv]][,model_years,index[3]+ag]*1e6
       #tb attributable deaths
       ResTabfb[1:nr+((intv-1)*nr),,6,ag]<-simulation_data[[intv]][,model_years,index[11]+ag]*1e3
       # percentage tb attributable deaths
@@ -137,7 +137,7 @@ format_as_restab_big_ages_indices <- function(simulation_data) {
   # simulation_data.
   nintvs <- length(simulation_data)
   nr <- dim(simulation_data[[1]])[[1]]
-  index<-tabby2_indices(colnames(simulation_data[[1]]))
+  index<-tabby2_indices(colnames(simulation_data[[1]][1,,]))
 
   #create 3 lists to hold output
   ResTabfb <- ResTabus <- ResTab <- array(NA,dim=c(nr*nintvs,length(model_years),5,4))
@@ -192,7 +192,7 @@ format_as_restab_big_ages_indices <- function(simulation_data) {
       #incident tb infections per million
       ResTabfb[1:nr+((intv-1)*nr),,3,b_ag]<-rowSums(simulation_data[[intv]][,model_years,index[7]+ag_vec], dims=2)/rowSums(simulation_data[[intv]][,model_years,index[3]+ag_vec], dims = 2)*1e6
       # TB notifications (alive+dead at diagnosis) per million
-      ResTabfb[1:nr+((intv-1)*nr),,4,b_ag]<-(apply(simulation_data[[intv]][,model_years,c(index[14]+ag_vec,index[15]+ag_vec)],c(1,2),sum)-apply(simulation_data[[intv]][,model_years,c(index[12]+ag_vec,index[13]+ag_vec)],c(1,2),sum))/rowSums(simulation_data[[intv]][,model_years,index[3]+ag_vec], dims = 2)*1e6
+      ResTabfb[1:nr+((intv-1)*nr),,4,b_ag]<-(apply(simulation_data[[intv]][,model_years,c(index[8]+ag_vec,index[9]+ag_vec)],c(1,2),sum)-apply(simulation_data[[intv]][,model_years,c(index[12]+ag_vec,index[13]+ag_vec)],c(1,2),sum))/rowSums(simulation_data[[intv]][,model_years,index[3]+ag_vec], dims = 2)*1e6
       # tb attributable deaths per million
       ResTabfb[1:nr+((intv-1)*nr),,5,b_ag]<-rowSums(simulation_data[[intv]][,model_years,index[11]+ag_vec],dims = 2)/rowSums(simulation_data[[intv]][,model_years,index[3]+ag_vec], dims = 2)*1e6
     } # end age loop
