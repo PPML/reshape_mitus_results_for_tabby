@@ -1,8 +1,8 @@
 tabby2_indices<-function(ResNam){
 
  index_vector<- c(which(ResNam=="N_0_4"), #total population,
-                  which(ResNam="N_US_0_4"),
-                  which(ResNam="N_FB_0_4"),
+                  which(ResNam=="N_US_0_4"),
+                  which(ResNam=="N_FB_0_4"),
 
                   which(ResNam=="N_US_LTBI_0_4"),  #first US LTBI count
                   which(ResNam=="N_FB_LTBI_0_4"),  #first US LTBI count
