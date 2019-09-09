@@ -17,7 +17,7 @@ tabby2_indices<-function(ResNam){
                   which(ResNam=="TBMORT_NUS_0_4"),
                   #USB SPECIFIC
                   which(ResNam=="NOTIF_US_0_4"),
-                  which(ResNam=="NOTIF_US_MORT_0_4"),
+                  which(ResNam=="NOTIF_US_MORT_0_4")
 #note NUSB notif outcomes are calculated from the difference between total and USB notif outputs.
 )
   return(index_vector)
