@@ -74,7 +74,7 @@ mean_small_restabs_indices <- function(restabs, nr, nints) {
 mean_big_restabs_indices <- function(restabs, nr, nints) { 
 
 	age_id <- (2018:2049)-1949
-  mResTabfb <- mResTabus <- mResTab <- array(NA,dim=c(nints,length(age_id),5,4))
+  mResTabfb <- mResTabus <- mResTab <- array(NA,dim=c(nints,length(age_id),dim(ResTab)[[3]],dim(ResTab)[[4]]))
 
 	ResTab <- restabs[['big_results']][['ResTab']]
 	ResTabus <- restabs[['big_results']][['ResTabus']]
