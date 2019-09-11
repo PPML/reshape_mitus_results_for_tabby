@@ -157,7 +157,7 @@ format_as_restab_big_ages_indices <- function(simulation_data) {
       #dimensions are
       #scenarios; length age id;
       # print(1:nr+((intv-1)*10))
-      ag_vec<- switch(b_ag,1:11, c(1,2,3),c(4,5,6,7),c(8,9,nr,11))
+      ag_vec<- switch(b_ag,1:11, c(1,2,3),c(4,5,6,7),c(8,9,10,11))
       ################################################################################
       # for (ag_vec in ag_vector){
       ResTab[1:nr+((intv-1)*nr),,1,b_ag]<-simulation_data[[intv]][,model_years,1]
