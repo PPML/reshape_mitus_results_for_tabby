@@ -6,6 +6,10 @@ NumericVector rt(ResTab);
 NumericVector rtus(ResTabus);
 NumericVector rtfb(ResTabfb);
 
+// The output from format_as_restab (and mean_restabs_*), i.e. rt, rtus, rtfb, ResTab, 
+// ResTabus, and ResTabfb have 4 columns, which are the following: 
+// intervention, years, outcome, age-group
+
 // Record the dimensions of ResTab, ResTabus, ResTabfb
 NumericVector dim = rt.attr("dim");
 NumericVector dim2 = rtus.attr("dim");
@@ -165,6 +169,9 @@ for (int j = 0; j < rt2.nrow(); j++) {
 		if (i[2] == 1) { // All
 			// ------------------ All Population -- Percent Basecase in Same Year ------------------
 
+      // restab columns:
+      // intervention, years, outcome, age-group
+
 			// Determine 4-dimensional numerator data position in ResTab
 			rt_idx = IntegerVector::create(ii[1]-1,ii[5]-1,ii[0],ii[3]-1);
 			idx = 0; // Construct 1-dimensional data position in rt
@@ -239,6 +246,9 @@ for (int j = 0; j < rt2.nrow(); j++) {
 		if (i[2] == 1) { 
 			// ------------------ All Population -- Percent Basecase in 2018 ------------------------
 			
+      // restab columns:
+      // intervention, years, outcome, age-group
+      
 			// Determine 4-dimensional numerator data position in ResTab
 			rt_idx = IntegerVector::create(ii[1]-1,ii[5]-1,ii[0],ii[3]-1);
 			idx = 0; // Construct 1-dimensional data position in rt
@@ -248,7 +258,8 @@ for (int j = 0; j < rt2.nrow(); j++) {
 			rt2(j,6) = rt[idx]; // Fill in numerator data from rt
 
 			// Determine 4-dimensional denominator data position in ResTab
-			rt_idx = IntegerVector::create(0,ii[5]-1,0,ii[3]-1);
+			/* rt_idx = IntegerVector::create(0,ii[5]-1,0,ii[3]-1); */
+      rt_idx = IntegerVector::create(0, 0, ii[0], ii[3]-1);
 			idx = 0;
 			for (int k = 0; k < dim.size(); k++) {
 				idx = idx + dim_mults[k] * rt_idx[k];
@@ -269,7 +280,8 @@ for (int j = 0; j < rt2.nrow(); j++) {
 			rt2(j,6) = rtus[idx]; // Fill in numerator data from rtus
 
 			// Determine 4-dimensional denominator data position in ResTabus
-			rt_idx = IntegerVector::create(0,ii[5]-1,0,ii[3]-1);
+			/* rt_idx = IntegerVector::create(0,ii[5]-1,0,ii[3]-1); */
+      rt_idx = IntegerVector::create(0, 0, ii[0], ii[3]-1);
 			idx = 0; // Construct 1-dimensional data position in rtus
 			for (int k = 0; k < dim.size(); k++) {
 				idx = idx + dim_mults[k] * rt_idx[k];
@@ -291,7 +303,8 @@ for (int j = 0; j < rt2.nrow(); j++) {
 			rt2(j,6) = rtfb[idx]; // Fill in numerator data from rtfb
 
 			// Determine 4-dimensional denominator data position in ResTabfb
-			rt_idx = IntegerVector::create(0,ii[5]-1,0,ii[3]-1);
+			/* rt_idx = IntegerVector::create(0,ii[5]-1,0,ii[3]-1); */
+      rt_idx = IntegerVector::create(0, 0, ii[0], ii[3]-1);
 			idx = 0; // Construct 1-dimensional data position in rtfb
 			for (int k = 0; k < dim.size(); k++) {
 				idx = idx + dim_mults[k] * rt_idx[k];
