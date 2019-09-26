@@ -101,7 +101,7 @@ make_empty_res_tab2bg <- function(intvs) {
     "pct_ltbi",
     "tb_infection_per_100k",
     "tb_incidence_per_100k",
-    "tb_deaths_per_mil")
+    "tb_deaths_per_100k")
   CatList[[2]] <- intvs
   CatList[[3]] <- c("all_populations","usb_population","fb_population")
   CatList[[4]] <- c("all_ages", "age_0_24","age_25_64","age_65p")
