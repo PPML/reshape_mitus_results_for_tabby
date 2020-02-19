@@ -8,7 +8,7 @@
 
 format_as_restab_small_ages <- function(simulation_data) { 
 
-  model_years = (2018:2049)-1949
+  model_years = (2020:2050)-1949
   tt<-0
 
   # preflight checklist
@@ -116,7 +116,7 @@ format_as_restab_small_ages <- function(simulation_data) {
 
 format_as_restab_big_ages <- function(simulation_data) { 
 
-  model_years = (2018:2049)-1949
+  model_years = (2020:2050)-1949
   tt<-0
 
   # preflight checklist

@@ -70,7 +70,7 @@ make_empty_res_tab2sm <- function(intvs) {
   CatList[[3]] <- c("all_populations","usb_population","fb_population")
   CatList[[4]] <- c("0-4",paste(0:8*10+5,1:9*10+4,sep="-"),"95+")
   CatList[[5]] <- c("absolute_value","pct_basecase_same_year","pct_basecase_2018")
-  CatList[[6]] <- 2018:2049
+  CatList[[6]] <- 2020:2050
   # CatList[[7]] <- c("mean","ci_low","ci_high")
 
   # Make the specified levels integer-leveled factors
@@ -106,7 +106,7 @@ make_empty_res_tab2bg <- function(intvs) {
   CatList[[3]] <- c("all_populations","usb_population","fb_population")
   CatList[[4]] <- c("all_ages", "age_0_24","age_25_64","age_65p")
   CatList[[5]] <- c("absolute_value","pct_basecase_same_year","pct_basecase_2018")
-  CatList[[6]] <- 2018:2049
+  CatList[[6]] <- 2020:2050
   # CatList[[7]] <- c("mean","ci_low","ci_high")
 
   # Make the specified levels integer-leveled factors

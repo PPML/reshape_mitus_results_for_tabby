@@ -1,7 +1,7 @@
 
 #' Mean the small age group restabs across simulations
 mean_small_restabs <- function(restabs, nr, nints) { 
-	age_id <- (2018:2049)-1949
+	age_id <- (2020:2050)-1949
 	mResTabfb <- mResTabus <- mResTab <- array(NA,dim=c(nints,length(age_id),7,11))
 
 	ResTab <- restabs[['small_results']][['ResTab']]
@@ -25,7 +25,7 @@ mean_small_restabs <- function(restabs, nr, nints) {
 #' Mean the big age group restabs across simulations
 mean_big_restabs <- function(restabs, nr, nints) { 
 
-	age_id <- (2018:2049)-1949
+	age_id <- (2020:2050)-1949
   mResTabfb <- mResTabus <- mResTab <- array(NA,dim=c(nints,length(age_id),5,4))
 
 	ResTab <- restabs[['big_results']][['ResTab']]
@@ -49,7 +49,7 @@ mean_big_restabs <- function(restabs, nr, nints) {
 
 #' Mean the small age group restabs across simulations
 mean_small_restabs_indices <- function(restabs, nr, nints) { 
-	age_id <- (2018:2049)-1949
+	age_id <- (2020:2050)-1949
 
 	ResTab <- restabs[['small_results']][['ResTab']]
 	ResTabus <- restabs[['small_results']][['ResTabus']]
@@ -75,7 +75,7 @@ mean_small_restabs_indices <- function(restabs, nr, nints) {
 #' Mean the big age group restabs across simulations
 mean_big_restabs_indices <- function(restabs, nr, nints) { 
 
-	age_id <- (2018:2049)-1949
+	age_id <- (2020:2050)-1949
 
 	ResTab <- restabs[['big_results']][['ResTab']]
 	ResTabus <- restabs[['big_results']][['ResTabus']]
