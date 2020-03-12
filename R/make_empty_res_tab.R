@@ -62,6 +62,8 @@ make_empty_res_tab2sm <- function(intvs) {
   CatList[[1]] <- c(
     "ltbi_000s",
     "pct_ltbi",
+    "tb_infection_000s",
+    "tb_infection_per_100k",
     "tb_incidence_000s",
     "tb_incidence_per_100k",
     "tb_mortality_000s",
@@ -98,10 +100,14 @@ make_empty_res_tab2bg <- function(intvs) {
   # Specify the levels of each dimension to the data
   CatList <- list()
   CatList[[1]] <- c(
+    "ltbi_000s",
     "pct_ltbi",
+    "tb_infection_000s",
     "tb_infection_per_100k",
+    "tb_incidence_000s",
     "tb_incidence_per_100k",
-    "tb_deaths_per_100k")
+    "tb_mortality_000s",
+    "tb_mortality_per_100k")
   CatList[[2]] <- intvs
   CatList[[3]] <- c("all_populations","usb_population","fb_population")
   CatList[[4]] <- c("all_ages", "age_0_24","age_25_64","age_65p")
