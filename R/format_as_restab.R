@@ -29,7 +29,7 @@ format_as_restab_small_ages <- function(simulation_data) {
   nr <- dim(simulation_data[[1]])[[1]]
   
   #create 3 lists to hold output
-  ResTabfb <- ResTabus <- ResTab <- array(NA,dim=c(nr*nintvs,length(model_years),9,11))
+  ResTabfb <- ResTabus <- ResTab <- array(NA,dim=c(nr*nintvs,length(model_years),14,11))
   
   # For each scenario/intervention, fill in the results from the corresponding 
   # simulation_data entry
@@ -61,7 +61,16 @@ format_as_restab_small_ages <- function(simulation_data) {
       ResTab[1:nr+((intv-1)*nr),,8,ag]<-apply(simulation_data[[intv]][,model_years,c(87,98)+ag],c(1,2),sum)*1e3
       #  tb attributable deaths per hundreds of thousands
       ResTab[1:nr+((intv-1)*nr),,9,ag]<-apply(simulation_data[[intv]][,model_years,c(87,98)+ag],c(1,2),sum)/simulation_data[[intv]][,model_years,2+ag]*1e5
-      
+      #  total number of ltbi tests 
+      ResTab[1:nr+((intv-1)*nr),,10,ag]<-apply(simulation_data[[intv]][,model_years,c(683,694)+ag],c(1,2),sum)*1e3 
+      #  total number of ltbi initiations 
+      ResTab[1:nr+((intv-1)*nr),,11,ag]<-apply(simulation_data[[intv]][,model_years,c(705,716)+ag],c(1,2),sum)*1e3 
+      #  total number of ltbi completions 
+      ResTab[1:nr+((intv-1)*nr),,12,ag]<-apply(simulation_data[[intv]][,model_years,c(727,738)+ag],c(1,2),sum)*1e3
+      #  total number of TB Treatment Initations 
+      ResTab[1:nr+((intv-1)*nr),,13,ag]<-apply(simulation_data[[intv]][,model_years,c(749,760)+ag],c(1,2),sum)*1e3
+      #  total number of TB Treatment Completions 
+      ResTab[1:nr+((intv-1)*nr),,14,ag]<-apply(simulation_data[[intv]][,model_years,c(771,782)+ag],c(1,2),sum)*1e3
       ################################################################################
       #US Born population
       ################################################################################
@@ -83,6 +92,16 @@ format_as_restab_small_ages <- function(simulation_data) {
       ResTabus[1:nr+((intv-1)*nr),,8,ag]<-simulation_data[[intv]][,model_years,87+ag]*1e3
       #  tb attributable deaths per hundreds of thousands
       ResTabus[1:nr+((intv-1)*nr),,9,ag]<-simulation_data[[intv]][,model_years,87+ag]/simulation_data[[intv]][,model_years,32+ag]*1e5
+      #  total number of ltbi tests 
+      ResTabus[1:nr+((intv-1)*nr),,10,ag]<-simulation_data[[intv]][,model_years,683+ag]*1e3 
+      #  total number of ltbi initiations 
+      ResTabus[1:nr+((intv-1)*nr),,11,ag]<-simulation_data[[intv]][,model_years,705+ag]*1e3 
+      #  total number of ltbi completions 
+      ResTabus[1:nr+((intv-1)*nr),,12,ag]<-simulation_data[[intv]][,model_years,727+ag]*1e3 
+      #  total number of TB treatment initations
+      ResTabus[1:nr+((intv-1)*nr),,13,ag]<-simulation_data[[intv]][,model_years,749+ag]*1e3 
+      #  total number of TB treatment completions
+      ResTabus[1:nr+((intv-1)*nr),,14,ag]<-simulation_data[[intv]][,model_years,771+ag]*1e3 
       
       ################################################################################
       #non-US Born population
@@ -106,7 +125,17 @@ format_as_restab_small_ages <- function(simulation_data) {
       ResTabfb[1:nr+((intv-1)*nr),,8,ag]<-simulation_data[[intv]][,model_years,98+ag]*1e3
       # percentage tb attributable deaths per hundreds of thousands
       ResTabfb[1:nr+((intv-1)*nr),,9,ag]<-simulation_data[[intv]][,model_years,98+ag]/simulation_data[[intv]][,model_years,43+ag]*1e5
-      
+      #  total number of ltbi tests 
+      ResTabfb[1:nr+((intv-1)*nr),,10,ag]<-simulation_data[[intv]][,model_years,694+ag]*1e3 #/simulation_data[[intv]][,model_years,2+ag]*1e5
+      #  total number of ltbi initiations 
+      ResTabfb[1:nr+((intv-1)*nr),,11,ag]<-simulation_data[[intv]][,model_years,716+ag]*1e3 
+      #  total number of ltbi completions 
+      ResTabfb[1:nr+((intv-1)*nr),,12,ag]<-simulation_data[[intv]][,model_years,738+ag]*1e3 
+      #  total number of TB treatment initations
+      ResTabfb[1:nr+((intv-1)*nr),,13,ag]<-simulation_data[[intv]][,model_years,760+ag]*1e3 
+      #  total number of TB treatment completions
+      ResTabfb[1:nr+((intv-1)*nr),,14,ag]<-simulation_data[[intv]][,model_years,782+ag]*1e3 
+  
     } # end age group loop
     
   } # end intervention loop
@@ -149,7 +178,7 @@ format_as_restab_big_ages <- function(simulation_data) {
   nr <- dim(simulation_data[[1]])[[1]]
   
   #create 3 lists to hold output
-  ResTabfb <- ResTabus <- ResTab <- array(NA,dim=c(nr*nintvs,length(model_years),9,4))
+  ResTabfb <- ResTabus <- ResTab <- array(NA,dim=c(nr*nintvs,length(model_years),14,4))
   
   
   # For each scenario/intervention, fill in the results from the corresponding 
@@ -186,7 +215,16 @@ format_as_restab_big_ages <- function(simulation_data) {
       ResTab[1:nr+((intv-1)*nr),,8,b_ag]<-apply(simulation_data[[intv]][,model_years,c(87+ag_vec,98+ag_vec)],c(1,2),sum)*1e3
       # tb attributable deaths per hundreds of thousands
       ResTab[1:nr+((intv-1)*nr),,9,b_ag]<-apply(simulation_data[[intv]][,model_years,c(87+ag_vec,98+ag_vec)],c(1,2),sum)/rowSums(simulation_data[[intv]][,model_years,2+ag_vec], dims = 2)*1e5
-      
+      #  total number of ltbi tests 
+      ResTab[1:nr+((intv-1)*nr),,10,b_ag]<-apply(simulation_data[[intv]][,model_years,c(683+ag_vec,694+ag_vec)],c(1,2),sum)*1e3 
+      #  total number of ltbi tests 
+      ResTab[1:nr+((intv-1)*nr),,11,b_ag]<-apply(simulation_data[[intv]][,model_years,c(705+ag_vec,716+ag_vec)],c(1,2),sum)*1e3 
+      #  total number of ltbi tests 
+      ResTab[1:nr+((intv-1)*nr),,12,b_ag]<-apply(simulation_data[[intv]][,model_years,c(727+ag_vec,738+ag_vec)],c(1,2),sum)*1e3 
+      #  total number of ltbi tests 
+      ResTab[1:nr+((intv-1)*nr),,13,b_ag]<-apply(simulation_data[[intv]][,model_years,c(749+ag_vec,760+ag_vec)],c(1,2),sum)*1e3 
+      #  total number of ltbi tests 
+      ResTab[1:nr+((intv-1)*nr),,14,b_ag]<-apply(simulation_data[[intv]][,model_years,c(771+ag_vec,782+ag_vec)],c(1,2),sum)*1e3 
       ################################################################################
       #US Born population
       ################################################################################
@@ -206,8 +244,17 @@ format_as_restab_big_ages <- function(simulation_data) {
       #tb attributable deaths in thousands
       ResTabus[1:nr+((intv-1)*nr),,8,b_ag]<-rowSums(simulation_data[[intv]][,model_years,87+ag_vec], dims=2)*1e3
       # #  attributable deaths per hundred thousand
-      ResTabus[1:nr+((intv-1)*nr),,9,b_ag]<-rowSums(simulation_data[[intv]][,model_years,87+ag_vec], dims = 2)/rowSums(simulation_data[[intv]][,model_years,32+ag_vec], dims = 2)*1e5
-      #
+      ResTabus[1:nr+((intv-1)*nr),,9,b_ag]<- rowSums(simulation_data[[intv]][,model_years,87+ ag_vec], dims = 2)/rowSums(simulation_data[[intv]][,model_years,32+ag_vec], dims = 2)*1e5
+      #  total number of ltbi tests 
+      ResTabus[1:nr+((intv-1)*nr),,10,b_ag]<-rowSums(simulation_data[[intv]][,model_years,683+ag_vec], dims = 2)*1e3 
+      #  total number of ltbi treatment initations 
+      ResTabus[1:nr+((intv-1)*nr),,11,b_ag]<-rowSums(simulation_data[[intv]][,model_years,705+ag_vec],dims = 2)*1e3 
+      #  total number of ltbi treatment completions 
+      ResTabus[1:nr+((intv-1)*nr),,12,b_ag]<-rowSums(simulation_data[[intv]][,model_years,727+ag_vec],dims = 2)*1e3 
+      #  total number of active tb treatment initations 
+      ResTabus[1:nr+((intv-1)*nr),,13,b_ag]<-rowSums(simulation_data[[intv]][,model_years,749+ag_vec],dims = 2)*1e3 
+      #  total number of active tb treatment completions 
+      ResTabus[1:nr+((intv-1)*nr),,14,b_ag]<-rowSums(simulation_data[[intv]][,model_years,771+ag_vec],dims = 2)*1e3 
       # ################################################################################
       # #non-US Born population
       # ################################################################################
@@ -227,7 +274,17 @@ format_as_restab_big_ages <- function(simulation_data) {
       #tb attributable deaths
       ResTabfb[1:nr+((intv-1)*nr),,8,b_ag]<-rowSums(simulation_data[[intv]][,model_years,98+ag_vec], dims=2)*1e3
       # tb attributable deaths per hundred thousand
-      ResTabfb[1:nr+((intv-1)*nr),,9,b_ag]<-rowSums(simulation_data[[intv]][,model_years,98+ag_vec],dims = 2)/rowSums(simulation_data[[intv]][,model_years,43+ag_vec], dims = 2)*1e5
+      ResTabfb[1:nr+((intv-1)*nr),,9,b_ag]<- rowSums(simulation_data[[intv]][,model_years,98+ ag_vec],dims = 2)/rowSums(simulation_data[[intv]][,model_years,43+ag_vec], dims = 2)*1e5
+      #  total number of ltbi tests 
+      ResTabfb[1:nr+((intv-1)*nr),,10,b_ag]<-rowSums(simulation_data[[intv]][,model_years,694+ag_vec],dims = 2)*1e3 
+      #  total number of ltbi treatment initations 
+      ResTabfb[1:nr+((intv-1)*nr),,11,b_ag]<-rowSums(simulation_data[[intv]][,model_years,716+ag_vec],dims = 2)*1e3 
+      #  total number of ltbi treatment completions 
+      ResTabfb[1:nr+((intv-1)*nr),,12,b_ag]<-rowSums(simulation_data[[intv]][,model_years,738+ag_vec],dims = 2)*1e3 
+      #  total number of active tb treatment initations 
+      ResTabfb[1:nr+((intv-1)*nr),,13,b_ag]<-rowSums(simulation_data[[intv]][,model_years,760+ag_vec],dims = 2)*1e3 
+      #  total number of active tb treatment completions 
+      ResTabfb[1:nr+((intv-1)*nr),,14,b_ag]<-rowSums(simulation_data[[intv]][,model_years,782+ag_vec],dims = 2)*1e3 
     } # end age loop
   } # end intv loop
   

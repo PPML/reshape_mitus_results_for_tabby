@@ -67,7 +67,12 @@ make_empty_res_tab2sm <- function(intvs) {
     "tb_incidence_000s",
     "tb_incidence_per_100k",
     "tb_mortality_000s",
-    "tb_mortality_per_100k")
+    "tb_mortality_per_100k", 
+    "ltbi_tests_000s", 
+    "ltbi_txinits_000s", 
+    "ltbi_txcomps_000s", 
+    "tb_txinits_000s", 
+    "tb_txcomps_000s")
   CatList[[2]] <- intvs
   CatList[[3]] <- c("all_populations","usb_population","fb_population")
   CatList[[4]] <- c("0-4",paste(0:8*10+5,1:9*10+4,sep="-"),"95+")
@@ -107,7 +112,13 @@ make_empty_res_tab2bg <- function(intvs) {
     "tb_incidence_000s",
     "tb_incidence_per_100k",
     "tb_mortality_000s",
-    "tb_mortality_per_100k")
+    "tb_mortality_per_100k",
+    #UPDATE ALL THE FOLLOWING TO 000s
+    "ltbi_tests_000s", 
+    "ltbi_txinits_000s", 
+    "ltbi_txcomps_000s", 
+    "tb_txinits_000s", 
+    "tb_txcomps_000s")
   CatList[[2]] <- intvs
   CatList[[3]] <- c("all_populations","usb_population","fb_population")
   CatList[[4]] <- c("all_ages", "age_0_24","age_25_64","age_65p")

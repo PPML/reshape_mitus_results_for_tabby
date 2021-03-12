@@ -13,3 +13,4 @@ Depends:
   readr,
 	inline,
 	Rcpp
+RoxygenNote: 7.1.1
